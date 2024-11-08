@@ -1,0 +1,91 @@
+ <div class="auth-container">
+  <div class="auth-card">
+    <!-- Card Header -->
+    <div class="card-header">
+      <h2>{{ isLogin ? 'Welcome Back' : 'Create Account' }}</h2>
+      <p>{{ isLogin ? 'Sign in to your account' : 'Join us today' }}</p>
+    </div>
+
+    <!-- Card Content -->
+    <div class="card-content">
+      <form  (ngSubmit)="onSubmit()">
+        <!-- Name Field (Registration only) -->
+        <div class="form-group" *ngIf="!isLogin">
+          <label for="name">Name</label>
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input
+              id="name"
+              type="text"
+              formControlName="name"
+              placeholder="John Doe"
+              [class.error]="submitted && f['name'].errors"
+            >
+          </div>
+          <div class="error-message" *ngIf="submitted && f['name'].errors">
+            <span *ngIf="f['name'].errors['required']">Name is required</span>
+          </div>
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+          <label for="email">Email</label>
+          <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input
+              id="email"
+              type="email"
+              formControlName="email"
+              placeholder="m@example.com"
+              [class.error]="submitted && f['email'].errors"
+            >
+          </div>
+          <div class="error-message" *ngIf="submitted && f['email'].errors">
+            <span *ngIf="f['email'].errors['required']">Email is required</span>
+            <span *ngIf="f['email'].errors['email']">Invalid email format</span>
+          </div>
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+          <label for="password">Password</label>
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input
+              id="password"
+              [type]="showPassword ? 'text' : 'password'"
+              formControlName="password"
+              [class.error]="submitted && f['password'].errors"
+            >
+            <button
+              type="button"
+              class="toggle-password"
+              (click)="showPassword = !showPassword"
+            >
+              <i class="fas" [class]="showPassword ? 'fa-eye-slash' : 'fa-eye'"></i>
+            </button>
+          </div>
+          <div class="error-message" *ngIf="submitted && f['password'].errors">
+            <span *ngIf="f['password'].errors['required']">Password is required</span>
+            <span *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</span>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn">
+          {{ isLogin ? 'Sign In' : 'Create Account' }}
+        </button>
+      </form>
+    </div>
+
+    <!-- Card Footer -->
+    <div class="card-footer">
+      <div class="divider">
+        <span>or</span>
+      </div>
+      <button type="button" class="toggle-mode-btn" (click)="toggleMode()">
+        {{ isLogin ? 'Create new account' : 'Sign in to existing account' }}
+      </button>
+    </div>
+  </div>
+</div>
